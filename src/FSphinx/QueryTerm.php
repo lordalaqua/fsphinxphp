@@ -196,13 +196,23 @@ class QueryTerm
             return '';
         }
 
-        $term = preg_replace('#(\w)(-)(\w)#u', '\\1 \\3', $this->getTerm());
-        $term = str_replace('"', '', $term);
-        if (strpos($term, ' ') !== false) {
-            $term = '"' . $term . '"';
-        }
+        return $this->getTerm();
 
-        return sprintf('(@%s %s)', $this->getSphinxField(), $term);
+        /*
+        * OBS: Removed the following code because it breaks extended
+        * syntax queries by adding the @field modifier before the query.
+        * There is probably a use case for this, but I (Lorenzo Dal'Aqua)
+        * do not use it, so for now I forked the library.
+        *
+        * */
+
+        // $term = preg_replace('#(\w)(-)(\w)#u', '\\1 \\3', $this->getTerm());
+        // $term = str_replace('"', '', $term);
+        // if (strpos($term, ' ') !== false) {
+        //     $term = '"' . $term . '"';
+        // }
+
+        // return sprintf('(@%s %s)', $this->getSphinxField(), $term);
     }
 
     /**
